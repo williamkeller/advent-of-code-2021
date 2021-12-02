@@ -28,6 +28,3 @@ def part_two
 
   puts "Incremented #{inc_count} times"
 end
-
-part_one
-part_two

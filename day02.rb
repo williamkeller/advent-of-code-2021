@@ -46,6 +46,3 @@ def part_two
 
   puts "Total: #{pos * depth}"
 end
-
-part_one
-part_two
