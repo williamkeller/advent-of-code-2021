@@ -1,9 +1,5 @@
 
-def data
-  $DATA ||= File.readlines('data/day02.txt')
-end
-
-def part_one
+def part_one(data)
   pos = 0
   depth = 0
 
@@ -24,7 +20,7 @@ def part_one
   puts "Total: #{pos * depth}"
 end
 
-def part_two
+def part_two(data)
   pos = 0
   depth = 0
   aim = 0

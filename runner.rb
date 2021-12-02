@@ -20,18 +20,27 @@ def parse_options
   options
 end
 
+# This is only correct when in the central time zone
 def current_day
   now = Time.now
   d = (now.hour == 23) ? now.day + 1: now.day
 end
 
+def data_file_name(options)
+  name = "data/day%02d" % options[:d]
+  name += "_test" if options[:t]
+  name += ".txt"
+
+  name
+end
+
 def run(options)
+  source = "./day%02d" % options[:d]
+  puzzle = "part_%s" % ((options[:p] == 1) ? 'one' : 'two')
+  data = data_file_name(options)
 
-  file = "./day%02d" % options[:d]
-  method = "part_%s" % ((options[:p] == 1) ? 'one' : 'two')
-
-  require_relative file
-  send(method)
+  require_relative source
+  method(puzzle).(File.readlines(data))
 end
 
 options = parse_options
