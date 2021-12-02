@@ -11,12 +11,9 @@ def part_one
   end
 
   puts "Incremented #{inc_count} times"
-
 end
 
 def part_two
-  lines = data
-
   sums = []
 
   for i in 2...data.size
