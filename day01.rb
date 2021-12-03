@@ -1,6 +1,10 @@
 
+def transform_data(data)
+  data.map(&:to_i)
+end
+
+
 def part_one(data)
-  data = data.map(&:to_i)
   inc_count = 0
 
   for i in 1...data.size
@@ -11,7 +15,6 @@ def part_one(data)
 end
 
 def part_two(data)
-  data = data.map(&:to_i)
   sums = []
 
   for i in 2...data.size

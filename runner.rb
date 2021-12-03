@@ -42,6 +42,11 @@ def run(options)
   data = File.readlines(datafile).map(&:strip)
 
   require_relative source
+
+  if private_methods.any?(/transform_data/)
+    data = transform_data(data)
+  end
+
   method(puzzle).(data)
 end
 
