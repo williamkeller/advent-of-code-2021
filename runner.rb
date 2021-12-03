@@ -4,9 +4,9 @@ def parse_options
   options = {}
 
   OptionParser.new do |opts|
-    opts.on('-p PUZZLE', Integer)
-    opts.on('-d DAY', Integer)
-    opts.on('-t')
+    opts.on('-p PUZZLE', Integer, 'Which puzzle for the day (1 or 2)')
+    opts.on('-d DAY', Integer, 'Which day of Advent (1 through 25)')
+    opts.on('-t', 'Use test data instead of real data')
   end.parse!(into: options)
 
   options[:p] ||= 1
@@ -37,15 +37,13 @@ end
 def run(options)
   source = "./day%02d" % options[:d]
   puzzle = "part_%s" % ((options[:p] == 1) ? 'one' : 'two')
-  data = data_file_name(options)
+  datafile = data_file_name(options)
+
+  data = File.readlines(datafile).map(&:strip)
 
   require_relative source
-  method(puzzle).(File.readlines(data))
+  method(puzzle).(data)
 end
 
 options = parse_options
 run(options)
-
-
-
-# run
