@@ -8,29 +8,30 @@ def parse_line(line)
 end
 
 
-def generate_cells(vent)
-  xrun = nil
-  yrun = nil
+def array_run(a, b)
+  if a < b
+    (a..b).to_a
+  else
+    (b..a).to_a.reverse
+  end
+end
 
+
+def generate_cells(vent)
   # Horizontal run
   if vent[:x1] == vent[:x2]
     xrun = Array.new((vent[:y1] - vent[:y2]).abs + 1, vent[:x1])
-    yrun = (vent[:y1] < vent[:y2]) ? (vent[:y1]..vent[:y2]).to_a :
-      (vent[:y2]..vent[:y1]).to_a.reverse
+    yrun = array_run(vent[:y1], vent[:y2])
 
   # Vertical run
   elsif vent[:y1] == vent[:y2]
-
-    xrun = (vent[:x1] < vent[:x2]) ? (vent[:x1]..vent[:x2]).to_a :
-      (vent[:x2]..vent[:x1]).to_a.reverse
+    xrun = array_run(vent[:x1], vent[:x2])
     yrun = Array.new((vent[:x1] - vent[:x2]).abs + 1, vent[:y1])
 
   # Diagonal run
   elsif (vent[:x1] - vent[:x2]).abs == (vent[:y1] - vent[:y2]).abs
-    xrun = (vent[:x1] < vent[:x2]) ? (vent[:x1]..vent[:x2]).to_a :
-      (vent[:x2]..vent[:x1]).to_a.reverse
-    yrun = (vent[:y1] < vent[:y2]) ? (vent[:y1]..vent[:y2]).to_a :
-      (vent[:y2]..vent[:y1]).to_a.reverse
+    xrun = array_run(vent[:x1], vent[:x2])
+    yrun = array_run(vent[:y1], vent[:y2])
   end
 
   xrun.zip(yrun)
