@@ -1,23 +1,23 @@
 
-def evaulate_board(b)
+def evaulate_boardoard(board)
   # Rows
   for i in 0...5
-    if b[i][0] == '*' &&
-       b[i][1] == '*' &&
-       b[i][2] == '*' &&
-       b[i][3] == '*' &&
-       b[i][4] == '*'
+    if board[i][0] == '*' &&
+       board[i][1] == '*' &&
+       board[i][2] == '*' &&
+       board[i][3] == '*' &&
+       board[i][4] == '*'
       return true
     end
   end
 
   # Columns
   for i in 0...5
-    if b[0][i] == '*' &&
-       b[1][i] == '*' &&
-       b[2][i] == '*' &&
-       b[3][i] == '*' &&
-       b[4][i] == '*'
+    if board[0][i] == '*' &&
+       board[1][i] == '*' &&
+       board[2][i] == '*' &&
+       board[3][i] == '*' &&
+       board[4][i] == '*'
       return true
     end
   end
