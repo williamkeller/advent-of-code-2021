@@ -11,13 +11,11 @@ def transform_data(data)
 end
 
 
-def walk(n1, n2, depth, cache_depth, cache, table)
+def walk(n1, n2, depth, cache, table)
 
-  if depth == cache_depth
-    cache_key = [n1, n2].join
-    if cache.key? cache_key
-      return cache[cache_key]
-    end
+  cache_key = [n1, n2, '|', depth].join
+  if cache.key? cache_key
+    return cache[cache_key]
   end
 
   ins = table[[n1, n2]]
@@ -28,16 +26,14 @@ def walk(n1, n2, depth, cache_depth, cache, table)
     return h0
   end
 
-  h1 = walk(n1, ins, depth - 1, cache_depth, cache, table)
-  h2 = walk(ins, n2, depth - 1, cache_depth, cache, table)
+  h1 = walk(n1, ins, depth - 1, cache, table)
+  h2 = walk(ins, n2, depth - 1, cache, table)
 
   h = h0.merge(h1, h2) { |k, a, b| a + b }
 
-  if depth == cache_depth
-    cache_key = [n1, n2].join
-    unless cache.key? cache_key
-      cache[cache_key] = h
-    end
+  cache_key = [n1, n2, '|', depth].join
+  unless cache.key? cache_key
+    cache[cache_key] = h
   end
 
   h
@@ -89,20 +85,19 @@ def part_two(data)
     table[[pair[0][0], pair[0][1]]] = pair[1]
   end
 
-  steps = 40
-  cache_depth = 20
+  depth = 40
   cache = {}
 
   counts = Hash.new { 0 }
   polymer.chars.each { |c| counts[c] += 1 }
 
   (0..(polymer.length - 2)).each do |i|
-    h = walk(polymer[i], polymer[i + 1], steps, cache_depth, cache, table)
+    h = walk(polymer[i], polymer[i + 1], depth, cache, table)
 
     counts.merge!(h) { |k, a, b| a + b }
   end
 
-  counts.each_pair { |k, v| puts "#{k} == #{v}" }
+  # counts.each_pair { |k, v| puts "#{k} == #{v}" }
 
   x = counts.to_a.sort { |a, b| a[1] <=> b[1] }
   puts x[-1][1] - x[0][1]
