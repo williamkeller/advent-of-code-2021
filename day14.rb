@@ -44,7 +44,7 @@ def walk(n1, n2, depth, cache_depth, cache, table)
 end
 
 
-# String methoc. Fine for small data, mediocre for real data.
+# String method. Fine for small data, fail for real data.
 def part_one(data)
   d = data
   pairs = d[1]
@@ -79,14 +79,14 @@ def part_one(data)
 end
 
 
+# Tree based solution, with caching to avoid repeated computations.
 def part_two(data)
-  d = data
-  pairs = d[1]
-  poly = d[0]
+  polymer = data[0]
 
+  # Table for faster(er) polymer pair lookups
   table = {}
-  pairs.each do |p|
-    table[[p[0][0], p[0][1]]] = p[1]
+  data[1].each do |pair|
+    table[[pair[0][0], pair[0][1]]] = pair[1]
   end
 
   steps = 40
@@ -94,10 +94,10 @@ def part_two(data)
   cache = {}
 
   counts = Hash.new { 0 }
-  d[0].chars.each { |c| counts[c] = counts[c] + 1 }
+  polymer.chars.each { |c| counts[c] += 1 }
 
-  (0..(poly.length - 2)).each do |i|
-    h = walk(poly[i], poly[i + 1], steps, cache_depth, cache, table)
+  (0..(polymer.length - 2)).each do |i|
+    h = walk(polymer[i], polymer[i + 1], steps, cache_depth, cache, table)
 
     counts.merge!(h) { |k, a, b| a + b }
   end
