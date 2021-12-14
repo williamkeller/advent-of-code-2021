@@ -97,8 +97,6 @@ def part_two(data)
     counts.merge!(h) { |k, a, b| a + b }
   end
 
-  # counts.each_pair { |k, v| puts "#{k} == #{v}" }
-
   x = counts.to_a.sort { |a, b| a[1] <=> b[1] }
   puts x[-1][1] - x[0][1]
 end
