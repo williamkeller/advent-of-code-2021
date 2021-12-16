@@ -22,8 +22,8 @@ class Node
 end
 
 
-def transform_data(data)
-  cells = data.each {|line| line.chars }
+def transform_data(olddata)
+  cells = olddata.each { |line| line.chars }
   max_x = cells[0].length - 1
   max_y = cells.length - 1
 
@@ -239,7 +239,6 @@ def part_two(data)
   puts "Took #{steps} steps "
 
   path = dump_path nodes, nodes[last_key]
-  # path.each { |step| puts "#{step.key} (#{step.w})   " }
   total = path.reduce(0) { |sum, step| sum + step.w }
   puts total - nodes['0-0'].w
 
